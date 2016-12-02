@@ -12,7 +12,6 @@ bosh-init https://github.com/cloudfoundry/bosh-init
 Run aws configure. The account you setup needs to have full access to EC2 and VPC.
 
 
-## Deploying a bosh director
 Example:
 ```
 $ aws configure
@@ -22,6 +21,8 @@ Default region name [None]: us-west-2
 Default output format [None]: ENTER
 ```
 
+## Deploy bosh director
+```
 $ git clone https://github.com/DaxterM/bosh-init-aws
 $ cd bosh-init-aws
 $ sed -i -e 's/PUTYOURKEYHERE/AKIAIOSFODNN7EXAMPLE/g' templates/bosh.yml.template  ###Replace AKIAIOSFODNN7EXAMPLE with your AWS access key
@@ -120,4 +121,4 @@ Finished deploying (00:19:42)
 
 Stopping registry... Finished (00:00:00)
 Cleaning up rendered CPI jobs... Finished (00:00:00)
-
+```
