@@ -4,14 +4,11 @@ Command line tool that completely automates the deployment of a BOSH director in
 
 ## Pre-reqs
 
-JQ https://stedolan.github.io/jq/ (brew install jqs)
-AWS CLI https://aws.amazon.com/cli/ (brew install awscli)
-bosh-init https://github.com/cloudfoundry/bosh-init
-## Usage
+* AWS CLI https://aws.amazon.com/cli/ (brew install awscli)
+* JQ https://stedolan.github.io/jq/ (brew install jq)
+* bosh-init https://github.com/cloudfoundry/bosh-init
 
 Run aws configure. The account you setup needs to have full access to EC2 and VPC.
-
-
 Example:
 ```
 $ aws configure
@@ -20,15 +17,20 @@ AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Default region name [None]: us-west-2
 Default output format [None]: ENTER
 ```
+## Usage
+
+
 
 ## Deploy bosh director
 ```
 $ git clone https://github.com/DaxterM/bosh-init-aws
 $ cd bosh-init-aws
-$ sed -i -e 's/PUTYOURKEYHERE/AKIAIOSFODNN7EXAMPLE/g' templates/bosh.yml.template  ###Replace AKIAIOSFODNN7EXAMPLE with your AWS access key
-$ sed -i -e 's/PUTYOURSECRETHER/wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY/g' templates/bosh.yml.template  ###Replace wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY with your AWS access key
+$ AWSAccessKey=Put_Access_Key_Here
+$ AWSSecretKey=Put_Secret_Key_Here
+$ sed -i -e 's/PUTYOURKEYHERE/'$AWSAccessKey'/g' templates/bosh.yml.template  
+$ sed -i -e 's/PUTYOURSECRETHER/'$AWSSecretKey'/g' templates/bosh.yml.template  
 
-$ ./bosh-init-aws.sh 
+$ ./bosh-init-aws.sh
 Name of bosh deployment (default:bosh-init-aws-deployment):
 My-New-Deployment
 
@@ -55,10 +57,10 @@ Rules Created
 Getting Elastic IP for Bosh Director
 Elastic IP x.x.x.x created
 
-Creating bosh key pair 
+Creating bosh key pair
 Key Created. Uploading Public Key to AWS
 {
-    "KeyName": "My-New-Deployment", 
+    "KeyName": "My-New-Deployment",
     "KeyFingerprint": "x:xx:xx:27:fe:18:02:50:c8:49:b9:de:0f:ac:ca:89"
 }
 
