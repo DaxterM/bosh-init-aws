@@ -19,7 +19,8 @@ Default output format [None]: ENTER
 ```
 ## Usage
 
-
+## Warning
+It is highly recommended that you change default usernames and passwords inside templates/bosh.yml.template. If you do not  you should at least update the security group rules to only allow access from your IP address.
 
 ## Deploy bosh director
 ```
@@ -123,4 +124,37 @@ Finished deploying (00:19:42)
 
 Stopping registry... Finished (00:00:00)
 Cleaning up rendered CPI jobs... Finished (00:00:00)
+```
+
+## Destroy bosh director
+```
+$ ./bosh-destroy-aws.sh
+Name of bosh deployment to Delete (default:bosh-init-aws-deployment):
+My-New-Deployment
+Bosh director instance id is i-0XXXXXXXXXX. Terminating it now
+{
+    "TerminatingInstances": [
+        {
+            "InstanceId": "i-XXXXXXXXXXX", 
+            "CurrentState": {
+                "Code": 32,
+                "Name": "shutting-down"
+            },
+            "PreviousState": {
+                "Code": 16,
+                "Name": "running"
+            }
+        }
+    ]
+}
+Terminate command issued. Waiting for it to complete
+instance terminated
+Deleting elastic ip
+Deleting Security group
+detaching internet gateway
+Deleting internet gateway
+Deleting bosh subnet
+Deleting VPC
+Deleting Keypair
+
 ```
