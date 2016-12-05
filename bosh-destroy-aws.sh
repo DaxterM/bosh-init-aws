@@ -11,7 +11,7 @@ fi
 
 
 
-echo "Name of bosh deployment to Delete (default:bosh-init-aws-deployment):"
+echo "Name of bosh deployment to Delete"
 read DeploymentName
 
 
