@@ -13,11 +13,10 @@ fi
 
 echo "Name of bosh deployment to Delete (default:bosh-init-aws-deployment):"
 read DeploymentName
-[ -z "$DeploymentName" ] && DeploymentName=bosh-init-aws-deployment
 
 
 
-if [ -d !"$DeploymentName" ]; then
+if [ ! -d "$DeploymentName" ]; then
   echo "No deployment with name $DeploymentName found Exiting" && exit 1;
 fi
 
