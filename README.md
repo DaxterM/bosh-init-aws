@@ -11,6 +11,7 @@ Command line tool that
 * AWS CLI https://aws.amazon.com/cli/ (brew install awscli)
 * JQ https://stedolan.github.io/jq/ (brew install jq)
 * bosh-init https://github.com/cloudfoundry/bosh-init
+* bosh CLI https://bosh.io/docs/bosh-cli.html
 
 Run aws configure. The account you setup needs to have full access to EC2 and VPC.
 Example:
