@@ -47,7 +47,7 @@ echo "Deleting Security group"
 aws ec2 delete-security-group --group-id $GroupId
 
 
-echo "detaching internet gateway"
+echo "Detaching internet gateway"
 aws ec2 detach-internet-gateway --internet-gateway-id ${InternetGatewayId} --vpc-id ${VpcId}
 
 echo "Deleting internet gateway"
@@ -55,6 +55,14 @@ aws ec2 delete-internet-gateway --internet-gateway-id ${InternetGatewayId}
 
 echo "Deleting bosh subnet"
 aws ec2 delete-subnet --subnet-id $SubnetID
+
+
+echo "Deleting us-east-1a VM subnet"
+aws ec2 delete-subnet --subnet-id $SubnetIduseast1a
+echo "Deleting us-east-1b VM subnet"
+aws ec2 delete-subnet --subnet-id $SubnetIduseast1b
+echo "Deleting us-east-1c VM subnet"
+aws ec2 delete-subnet --subnet-id $SubnetIduseast1c
 
 echo "Deleting VPC"
 aws ec2 delete-vpc --vpc-id $VpcId

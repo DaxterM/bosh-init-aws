@@ -53,6 +53,17 @@ echo -e "\nCreating  subnet for BoshVPC"
 SubnetId="$(aws ec2 create-subnet --vpc-id ${VpcId} --availability-zone us-east-1a --cidr-block 10.0.0.0/24 | jq -r .Subnet.SubnetId)"
 echo "Public subnet ${SubnetId} created"
 
+echo -e "\nCreating  us-east-1a VM subnet for BoshVPC 10.0.10.0/24"
+SubnetIduseast1a="$(aws ec2 create-subnet --vpc-id ${VpcId} --availability-zone us-east-1a --cidr-block 10.0.10.0/24 | jq -r .Subnet.SubnetId)"
+echo "us-east-1a VM subnet ${SubnetIduseast1a} created"
+
+echo -e "\nCreating  us-east-1b VM subnet for BoshVPC 10.0.11.0/24"
+SubnetIduseast1b="$(aws ec2 create-subnet --vpc-id ${VpcId} --availability-zone us-east-1b --cidr-block 10.0.11.0/24 | jq -r .Subnet.SubnetId)"
+echo "us-east-1b VM subnet ${SubnetIduseast1b} created"
+
+echo -e "\nCreating  us-east-1c VM subnet for BoshVPC 10.0.12.0/24"
+SubnetIduseast1c="$(aws ec2 create-subnet --vpc-id ${VpcId} --availability-zone us-east-1c --cidr-block 10.0.12.0/24 | jq -r .Subnet.SubnetId)"
+echo "us-east-1c VM subnet ${SubnetIduseast1c} created"
 
 
 echo -e "\nCreating Bosh Security Group"
@@ -96,6 +107,9 @@ echo "SubnetID=${SubnetId}" >> awsoutputs
 echo "GroupId=${GroupId}" >> awsoutputs
 echo "PublicIp=${PublicIp}" >> awsoutputs
 echo "AllocationId=${AllocationId}" >> awsoutputs
+echo "SubnetIduseast1a=${SubnetIduseast1a}" >> awsoutputs
+echo "SubnetIduseast1b=${SubnetIduseast1b}" >> awsoutputs
+echo "SubnetIduseast1c=${SubnetIduseast1c}" >> awsoutputs
 
 
 echo -e "\nGenerating AWS bosh.yml"
@@ -103,11 +117,18 @@ echo -e "\nGenerating AWS bosh.yml"
 cp ../templates/bosh.yml.template  bosh.yml
 
 
+
 sed -i '.template' 's/VpcId/'${VpcId}'/g;s/SubnetID/'${SubnetId}'/g;s/GroupId/'${GroupId}'/g;s/PublicIp/'${PublicIp}'/g;s/BIA-DeploymentName/'${DeploymentName}'/g;s/BOSHSECURITYGROUP/'${DeploymentName}'/g' bosh.yml
 rm bosh.yml.template
 
+echo -e "\nGenerating AWS cloud config"
+cp ../templates/cloud.yml.template cloud.yml
+sed -i '.template' 's/us-east-1aSUBNET/'${SubnetIduseast1a}'/g;s/us-east-1bSUBNET/'${SubnetIduseast1b}'/g;s/us-east-1cSUBNET/'${SubnetIduseast1c}'/g' cloud.yml
+rm cloud.yml.template
 
-echo -e "Bosh manifest created. To deploy a bosh director run:
+echo -e "Bosh and cloud config manifest created. To deploy a bosh director, login to the bosh director, and upload the cloud config run:
 
          cd $DeploymentName
-         bosh-init deploy ./bosh.yml"
+         bosh-init deploy ./bosh.yml
+         bosh target $PublicIp
+         bosh upload cloud-config cloud.yml"
