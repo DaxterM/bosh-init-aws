@@ -1,6 +1,10 @@
 # bosh-init-aws
 
-Command line tool that completely automates the deployment of a BOSH director including the AWS infrastructure and networking setup.
+Command line tool that
+* Automates BOSH AWS infrastructure creation
+* Creates bosh deployment manifest containing newly created AWS infrastructure (VPC, Subnets, Elastic IP, etc)
+* Creates AWS cloud config containing newly created AWS infrastructure
+* the deployment of a BOSH director including the AWS infrastructure and networking setup.
 
 ## Pre-reqs
 
@@ -126,6 +130,11 @@ Stopping registry... Finished (00:00:00)
 Cleaning up rendered CPI jobs... Finished (00:00:00)
 ```
 
+## Upload Cloud config
+```
+$ bosh target Elastic_IP_Here
+$ bosh upload cloud-config Deployment_Name_Here/cloud.yml
+```
 ## Destroy bosh director
 ```
 $ ./bosh-destroy-aws.sh
@@ -135,7 +144,7 @@ Bosh director instance id is i-0XXXXXXXXXX. Terminating it now
 {
     "TerminatingInstances": [
         {
-            "InstanceId": "i-XXXXXXXXXXX", 
+            "InstanceId": "i-XXXXXXXXXXX",
             "CurrentState": {
                 "Code": 32,
                 "Name": "shutting-down"
