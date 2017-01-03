@@ -4,7 +4,7 @@ Command line tool that
 * Automates BOSH AWS infrastructure creation
 * Creates bosh deployment manifest containing newly created AWS infrastructure (VPC, Subnets, Elastic IP, etc)
 * Creates AWS cloud config containing newly created AWS infrastructure
-* the deployment of a BOSH director including the AWS infrastructure and networking setup.
+
 
 ## Pre-reqs
 
